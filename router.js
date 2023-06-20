@@ -2,7 +2,6 @@
 const router = require('express').Router();
 const Chat = require('./controllers/chat')
 
-// // Chat 
 router.post('/saveMessage', Chat.saveMessage);
 router.post('/getmessage', Chat.getMessages);
 router.post('/getchatlist', Chat.getChatList);

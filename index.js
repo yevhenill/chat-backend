@@ -104,16 +104,12 @@ io.on('connection', (socket) => {
 
   socket.on('updateUserList', async (data) => {
     // Get the all users in the current room
-    // var roomusers = await db.sequelize.query(
-    //   `SELECT * FROM projects WHERE roomID = ${data.roomId}`, { type: db.Sequelize.QueryTypes.SELECT })
     const roomusers = await Project.findAll({ where: { roomID: data.roomId } });
 
     roomusers = roomusers[0]
 
     var guests = JSON.parse(roomusers.guests).map(obj => obj.id);
     guests = guests.join(', ');
-    // var userlist = await db.sequelize.query(
-    //   `SELECT * FROM users WHERE id = ${roomusers.sender} OR id = ${roomusers.reciever} OR id IN (${guests})`, { type: db.Sequelize.QueryTypes.SELECT })
     const userlist = await User.findAll({
       where: {
         id: {
@@ -371,9 +367,6 @@ io.on('connection', (socket) => {
   async function sendUserstatus() {
     const user = users.find(u => u.id === socket.id); // Find user using ID
     if (user) {
-      // const list = await db.sequelize.query(
-      //   `SELECT sender, reciever FROM projects WHERE sender = ${user.user} OR reciever = ${user.user}`,
-      //   { type: db.Sequelize.QueryTypes.SELECT })
       const list = await Project.findAll({
         attributes: ['sender', 'reciever'],
         where: {
