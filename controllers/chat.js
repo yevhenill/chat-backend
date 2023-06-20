@@ -426,10 +426,7 @@ exports.invitepeople = async function (req, res, next) {
 		else {
 			res.send({ value: [], ids: [] })
 		}
-
 	}
-	// params = JSON.stringify(params);
-
 }
 
 /************************************************************* TAG API ***********************************************************/
